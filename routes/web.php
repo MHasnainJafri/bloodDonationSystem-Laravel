@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\bloodrequestController;
 use App\Http\Controllers\usersController;
+use App\Http\Controllers\recipientController;
+use App\Http\Controllers\donorController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,6 +28,8 @@ Route::get('/dashboard', function () {
 Route::middleware('auth')->group(function () {
     Route::resource('/bloodrequest',bloodrequestController::class);
     Route::resource('/users',usersController::class);
+    Route::resource('/recipientrequest',recipientController::class);
+    Route::resource('/donorrequest',donorController::class);
     // Route::resource('/contactus',[contactusController::class]);
     // Route::resource('/donatedblood',[donatedbloodController::class]);
     // Route::resource('/userinfo',[userinfoController::class]);

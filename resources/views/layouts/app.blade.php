@@ -13,6 +13,70 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <style>
+            body {
+  background-color: #ffcccc;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+}
+
+body {
+  font-size: 16px;
+}
+.navbar {
+  background-color: #cc0000;
+}
+.nav-link {
+  color: #fff;
+  font-weight: bold;
+}
+
+.navbar .active {
+  background-color: #ff3333;
+}
+.navbar {
+  border-bottom: 2px solid #cc0000;
+}
+thead th {
+  background-color: #cc0000;
+  color: #fff;
+}
+tbody td {
+  padding: 10px;
+}
+tbody tr:hover {
+  background-color: #ffe6e6;
+}
+body {
+  background: linear-gradient(to bottom right, #ffcccc, #ff3333);
+}
+tbody tr {
+  background-color: #ffe6e6;
+}
+thead th {
+  color: #fff;
+}
+table {
+  border: 2px solid #cc0000;
+}
+table {
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+.btn-primary {
+  background-color: #cc0000;
+  border-color: #cc0000;
+}
+.btn-primary {
+  color: #fff;
+}
+.btn-primary:hover {
+  background-color: #ff3333;
+  border-color: #ff3333;
+}
+
+            </style>
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
@@ -28,7 +92,7 @@
             @endif
 
             <!-- Page Content -->
-            <main>
+            <main style="margin: 30px">
                 {{ $slot }}
             </main>
         </div>

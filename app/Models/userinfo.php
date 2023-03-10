@@ -8,5 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class userinfo extends Model
 {
     use HasFactory;
+    protected $guarded;
     public $table="userinfos";
 }

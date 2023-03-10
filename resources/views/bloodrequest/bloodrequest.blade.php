@@ -5,10 +5,15 @@
         </h2>
     </x-slot>
 
-    <div class="py-12 px-20">
+    <div class="py-12 px-20 " >
 
         @if(Session::has('message'))
-            <div class="bg-green-300 text-green-700 rounded px-2 py-3">
+            <div class="bg-green-300 text-green-700 rounded px-2 py-3" style="background: #5ad25acf;
+            opacity: 0.8;
+            color: white;
+            padding: 8px;
+            margin: 20px;
+            border-radius: 10px;">
                 {{Session::get('message')}}
             </div>
         @endif
@@ -16,8 +21,11 @@
 
         <div class="" style="    display: flex;
         align-items: end;
-        justify-content: end;">
-            <a href="{{route('bloodrequest.create')}}" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150 flex justify-self-end">Create bloodrequest</a>
+        justify-content: end;
+        margin-bottom:20px;
+        margin-right:13vw;
+        ">
+            <a href="{{route('bloodrequest.create')}}" class="btn-primary inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150 flex justify-self-end">Create bloodrequest</a>
         </div>
 
         <table class="min-w-full divide-y divide-gray-200 w-100 mx-auto">
@@ -29,7 +37,7 @@
                     <th class="relative px-6 py-3">Blood Type</th>
                     <th class="relative px-6 py-3">Location</th>
                     <th class="relative px-6 py-3">status</th>
-                    <th class="relative px-6 py-3"></th>
+                    <th class="relative px-6 py-3">Actions</th>
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
@@ -42,10 +50,10 @@
                         <td class="px-6 py-4 ">{{$data->BloodType}}</td>
                         <td class="px-6 py-4 ">{{$data->location}}</td>
                         <td class="px-6 py-4 ">{{$data->status}}</td>
+                        
                         <td class="px-6 py-4 ">
                             <a href="{{route('bloodrequest.edit', [$data->id])}}" class="text-blue-500">Edit</a>
-                        </td>
-                        <td class="px-6 py-4 ">
+
                             <form method="post" action="{{route('bloodrequest.destroy', [$data->id])}}" id="deleteForm{{$data->id}}">
                                 @csrf
                                 @method('DELETE')

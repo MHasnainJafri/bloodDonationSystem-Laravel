@@ -39,7 +39,7 @@
                 </a>
           
 
-            <x-primary-button class="ml-3">
+            <x-primary-button class="ml-3 btn-primary">
                 {{ __('Log in') }}
             </x-primary-button>
         </div>

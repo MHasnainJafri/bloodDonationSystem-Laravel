@@ -1,16 +1,15 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Posts') }}
+            {{ __('Blood reciever') }}
         </h2>
     </x-slot>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
-                    <form method="post" action="{{ route('bloodrequest.update',$bloodRequest->id) }}">
+                    <form method="post" action="{{ route('bloodrequest.store') }}">
                         @csrf
-                        @method('PUT')
                         <div class="p-2 flex items-center">
                             <label for="title" class="w-20">Donor Name</label>
                           
@@ -20,12 +19,7 @@
                                 
                                 $query->where('is_donor', 1);
                             })->get()  as  $donor)
-                            <option value="{{$donor->id}}"
-                                @if($donor->id==$bloodRequest->donor_id)
-                                selected
-                                @endif
-                                
-                                >{{$donor->name}}</option>
+                            <option value="{{$donor->id}}">{{$donor->name}}</option>
                                 
                             @endforeach
                             </select>
@@ -39,12 +33,8 @@
                                 @foreach (\App\Models\User::whereHas('userInfo', function($query) {
                                     
                                     $query->where('is_acceptor', 1);
-                                })->get()  as  $acceptor)
-                                <option value="{{$acceptor->id}}"
-                                    @if($acceptor->id==$bloodRequest->recipient_id)
-                                    selected
-                                    @endif
-                                    >{{$acceptor->name}}</option>
+                                })->get()  as  $donor)
+                                <option value="{{$donor->id}}">{{$donor->name}}</option>
                                     
                                 @endforeach
                                 </select>
@@ -53,9 +43,7 @@
                         </div>
                         <div class="p-2 flex items-center">
                             <label for="body" class="w-20">Blood Group</label>
-                            <select class="rounded-md border-gray-300 hover:border-gray-600 flex-1" name="BloodType"
-                            value="{{$bloodRequest->BloodType}}"
-                            >
+                            <select class="rounded-md border-gray-300 hover:border-gray-600 flex-1" name="BloodType">
                             <option value="A">A</option>
                             <option value="A+">A+</option>
                             <option value="A-">A-</option>
@@ -71,9 +59,7 @@
                         </div>
                         <div class="p-2 flex items-center">
                             <label for="body" class="w-20">Location</label>
-                            <input type="text" class="rounded-md border-gray-300 hover:border-gray-600 flex-1"
-                            value="{{$bloodRequest->location}}"
-                            name="location"/>
+                            <input type="text" class="rounded-md border-gray-300 hover:border-gray-600 flex-1" name="location"/>
                             <x-input-error :messages="$errors->get('location')" class="mt-2" />
 
                         </div>

@@ -11,10 +11,10 @@ class bloodRequests extends Model
     public $table="blood_requests";
     protected $guarded;
     public function recipient(){
-        return $this->belongsTo(user::class,'recipient_id','id');
+        return $this->belongsTo(User::class, 'recipient_id');
     }
 
     public function donor(){
-        return $this->belongsTo(user::class,'donor_id','id');
+        return $this->belongsTo(User::class, 'donor_id');
     }
 }

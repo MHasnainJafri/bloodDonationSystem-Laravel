@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Validator;
+use App\Models\bloodRequests;
 use App\Models\user;
 
-class usersController extends Controller
+class recipientController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +16,9 @@ class usersController extends Controller
      */
     public function index()
     {
-        $users = user::paginate(10);
-        return view('users.index', compact('users'));
+         $recipients= user::all();
+        
+        return view('recipientrequest.recipients', compact('recipients'));
     }
     /**
      * Show the form for creating a new resource.
@@ -25,7 +27,7 @@ class usersController extends Controller
      */
     public function create()
     {
-        return view("users.add");
+        return view("recipientrequest.add");
     }
     /**
      * Store a newly created resource in storage.
@@ -36,17 +38,14 @@ class usersController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            "BloodType" => "required",
-            "name" => "required",
-            "email" => "required",
-            "Address" => "required",
-            "Country" => "required",
-            "provice" => "required",
-            "District" => "required",
+           "BloodType" => "required",
+           "recipient_id" => "required",
+           "donor_id" => "required",
+           "location" => "required"
         ]);
-        $user=user::create($request->only('name','email','password'));
-        $user->userinfo()->updateOrCreate($request->only('BloodType','Address','Country','provice','District','is_acceptor','is_donor'));
-        return redirect(route('users.index'))->with('message', 'user created with success');
+        $bloodRequests =  bloodRequests::create($request->only('BloodType','recipient_id','donor_id','location'));
+        
+        return redirect(route('recipientrequest.index'))->with('message', 'bloodRequests created with success');
     }
     /**
      * Display the specified resource.
@@ -66,8 +65,8 @@ class usersController extends Controller
      */
     public function edit($id)
     {
-        $user = user::find($id);
-        return view("users.edit", compact('user'));
+        $bloodRequest = bloodRequests::find($id);
+        return view("recipientrequest.edit", compact('bloodRequest'));
     }
     /**
      * Update the specified resource in storage.
@@ -80,17 +79,12 @@ class usersController extends Controller
     {
         $this->validate($request, [
             "BloodType" => "required",
-            "name" => "required",
-            "email" => "required",
-            "Address" => "required",
-            "Country" => "required",
-            "provice" => "required",
-            "District" => "required",
+            "recipient_id" => "required",
+            "donor_id" => "required",
+            "location" => "required"
          ]);
-         $user = user::find($id);
-        $user->update($request->only('name','email'));
-        $user->userinfo()->update($request->only('BloodType','Address','Country','provice','District'));
-        return redirect(route('users.index'))->with('message', 'user updated with success');
+        $bloodRequests = bloodRequests::find($id)->update($request->only('BloodType','recipient_id','donor_id','location'));
+        return redirect(route('recipientrequest.index'))->with('message', 'bloodRequests updated with success');
     }
     /**
      * Remove the specified resource from storage.
@@ -100,7 +94,7 @@ class usersController extends Controller
      */
     public function destroy($id)
     {
-        user::find($id)->delete();
-        return redirect(route('users.index'))->with('message', 'user deleted with success');
+        bloodRequests::find($id)->delete();
+        return redirect(route('recipientrequest.index'))->with('message', 'bloodRequests deleted with success');
     }
 }

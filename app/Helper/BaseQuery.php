@@ -52,7 +52,7 @@ trait BaseQuery
     {
         return $model->whereHas('roles', function ($q) {
             $q->where('name', '!=', 'admin');
-        })->orderBy('created_at', 'DESC')->get();;
+        })->orderBy('created_at', 'DESC')->get();
     }
 
     /**

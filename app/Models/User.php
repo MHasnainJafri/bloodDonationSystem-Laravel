@@ -47,10 +47,18 @@ class User extends Authenticatable
     }
 
     public function donatedBlood(){
-        return $this->hasMany(donatedblood::class);
+        return $this->hasMany(bloodRequests::class, 'recipient_id');
     }
     public function bloodRequests(){
-        return $this->hasMany(bloodRequests::class);
+        return $this->hasMany(bloodRequests::class, 'donor_id');
+    }
+    public function donationCount()
+    {
+        return $this->bloodRequests()->count();
+    }
+    public function acceptedCount()
+    {
+        return $this->donatedBlood()->count();
     }
 
 }
