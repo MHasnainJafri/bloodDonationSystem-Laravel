@@ -43,17 +43,12 @@
                         </div>
                         <div class="p-2 flex items-center">
                             <label for="body" class="w-20">Blood Group</label>
-                            <select class="rounded-md border-gray-300 hover:border-gray-600 flex-1" name="BloodType">
-                            <option value="A">A</option>
-                            <option value="A+">A+</option>
-                            <option value="A-">A-</option>
-                            <option value="B">B</option>
-                            <option value="B+">B+</option>
-                            <option value="B-">B-</option>
-                            <option value="O">O</option>
-                            <option value="O+">O+</option>
-                            <option value="O-">O-</option>
-                            </select>
+                            <select name="BloodType"
+                            class="rounded-md border-gray-300 hover:border-gray-600 flex-1 ml-4 mr-4" id="BloodType">
+                            @foreach (\App\Models\bloodtype::all() as $bloodtype)
+                                <option value="{{ $bloodtype->id }}">{{ $bloodtype->type }}</option>
+                            @endforeach
+                        </select>
                             <x-input-error :messages="$errors->get('BloodType')" class="mt-2" />
 
                         </div>

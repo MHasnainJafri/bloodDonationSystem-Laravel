@@ -6,6 +6,7 @@ use App\Http\Controllers\bloodrequestController;
 use App\Http\Controllers\usersController;
 use App\Http\Controllers\recipientController;
 use App\Http\Controllers\donorController;
+use App\Http\Controllers\otherController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,6 +28,12 @@ Route::get('/dashboard', function () {
 
 Route::middleware('auth')->group(function () {
     Route::resource('/bloodrequest',bloodrequestController::class);
+    Route::get('/bloodrequests',[otherController::class,'bloodrequestview'])->name('bloodrequest.request');
+    Route::get('/mybloodrequest',[otherController::class,'getrequest'])->name('bloodrequest.user');
+    Route::get('/requestRecieved',[otherController::class,'requestRecieved'])->name('bloodrequest.requestRecieved');
+    Route::get('/approveblooddonation/{id}',[otherController::class,'approveblooddonation'])->name('bloodrequest.approveblooddonation');
+    // Route::get('/bloodrequest/{query}',[bloodrequestController::class,'bloodrequestsearch']);
+    // Route::post('/bloodrequest',[bloodrequestController::class,'bloodrequest']);
     Route::resource('/users',usersController::class);
     Route::resource('/recipientrequest',recipientController::class);
     Route::resource('/donorrequest',donorController::class);
@@ -36,6 +43,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::post('/searchblood', [bloodrequestController::class, 'search'])->name('donorrequest.search');
+    Route::get('/sendRequest/{id?}/{bloodtype?}', [bloodrequestController::class, 'sendRequest'])->name('bloodrequest.sendRequest');
 });
 
 require __DIR__.'/auth.php';

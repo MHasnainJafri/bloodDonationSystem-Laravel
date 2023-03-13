@@ -49,7 +49,11 @@
                         <td class="px-6 py-4 ">{{$data->name}}</td>
                         <td class="px-6 py-4 ">{{$data->email}}</td>
                         <td class="px-6 py-4 ">{{$data->donationCount() }}</td>
-                        <td class="px-6 py-4 ">{{$data->userinfo->Address}}</td>
+                        <td class="px-6 py-4 ">
+                            @if (isset($data->userinfo))
+                            {{$data->userinfo->Address}}
+                       @endif
+                        </td>
                         {{-- <td class="px-6 py-4 ">{{$data->status}}</td> --}}
                         <td class="px-6 py-4 ">
                             <a href="{{route('users.edit', [$data->id])}}" class="text-blue-500">Edit</a>

@@ -16,6 +16,7 @@ class donorController extends Controller
      */
     public function index()
     {
+        
          $donors= user::all();
         
         return view('donorrequest.recipients', compact('donors'));

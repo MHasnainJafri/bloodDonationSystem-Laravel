@@ -25,7 +25,10 @@
         margin-bottom:20px;
         margin-right:13vw;
         ">
-            <a href="{{route('bloodrequest.create')}}" class="btn-primary inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150 flex justify-self-end">Create bloodrequest</a>
+        @if (auth()->user()->type==1)
+        <a href="{{route('bloodrequest.create')}}" class="btn-primary inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150 flex justify-self-end">Create bloodrequest</a>
+
+        @endif
         </div>
 
         <table class="min-w-full divide-y divide-gray-200 w-100 mx-auto">
@@ -47,13 +50,24 @@
                         <td class="px-6 py-4 ">{{$data->id}}</td>
                         <td class="px-6 py-4 ">{{$data->donor->name}}</td>
                         <td class="px-6 py-4 ">{{$data->recipient->name}}</td>
-                        <td class="px-6 py-4 ">{{$data->BloodType}}</td>
+                        <td class="px-6 py-4 "><span class="bloodtag">{{$data->BloodType}}</span></td>
                         <td class="px-6 py-4 ">{{$data->location}}</td>
                         <td class="px-6 py-4 ">{{$data->status}}</td>
                         
                         <td class="px-6 py-4 ">
-                            <a href="{{route('bloodrequest.edit', [$data->id])}}" class="text-blue-500">Edit</a>
 
+                            @if(auth()->user()->type==1)
+                            <a href="{{route('bloodrequest.edit', [$data->id])}}" class="text-blue-500">Edit</a>
+                            @else
+
+                            @if(Route::currentRouteName()=="bloodrequest.requestRecieved" && $data->status=="Pending")
+                            <a href="approveblooddonation/{{$data->id}}"}}>Approve</a>
+                           @endif 
+                            @if(Route::currentRouteName()=="bloodrequest.requestRecieved" && $data->status=="Active")
+                            <span>Approved</span>
+                            @endif
+                           
+@endif
                             <form method="post" action="{{route('bloodrequest.destroy', [$data->id])}}" id="deleteForm{{$data->id}}">
                                 @csrf
                                 @method('DELETE')

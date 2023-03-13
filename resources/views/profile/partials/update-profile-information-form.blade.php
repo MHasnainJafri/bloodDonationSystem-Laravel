@@ -28,6 +28,40 @@
             <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
             <x-input-error class="mt-2" :messages="$errors->get('email')" />
 
+
+                <div>
+                    <x-input-label for="BloodType" :value="__('BloodType')" />
+                    <select name="BloodType"
+                    class="rounded-md border-gray-300 hover:border-gray-600 flex-1 ml-4 mr-4" id="BloodType">
+                    @foreach (\App\Models\bloodtype::all() as $bloodtype)
+                        <option value="{{ $bloodtype->id }}" {{$bloodtype->id==$user->userinfo->BloodType ?'selected':''}}>{{ $bloodtype->type }}</option>
+                    @endforeach
+                </select>
+                                    <x-input-error class="mt-2" :messages="$errors->get('BloodType')" />
+                </div>
+                <div>
+                    <x-input-label for="Address" :value="__('Address')" />
+                    <x-text-input id="Address" name="Address" type="text" class="mt-1 block w-full" :value="old('Address', $user->userinfo->Address)" required autofocus autocomplete="Address" />
+                    <x-input-error class="mt-2" :messages="$errors->get('Address')" />
+                </div>
+                <div>
+                    <x-input-label for="Country" :value="__('Country')" />
+                    <x-text-input id="Country" name="Country" type="text" class="mt-1 block w-full" :value="old('Country', $user->userinfo->Country)" required autofocus autocomplete="Country" />
+                    <x-input-error class="mt-2" :messages="$errors->get('Country')" />
+                </div>
+                <div>
+                    <x-input-label for="phoneNumber" :value="__('phoneNumber')" />
+                    <x-text-input id="phoneNumber" name="phoneNumber" type="text" class="mt-1 block w-full" :value="old('phoneNumber', $user->userinfo->phoneNumber)" required autofocus autocomplete="phoneNumber" />
+                    <x-input-error class="mt-2" :messages="$errors->get('phoneNumber')" />
+                </div>
+                <input type="hidden" name="user_id" value="{{auth()->user()->id}}"/>
+
+
+                
+
+
+                
+
             @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
                 <div>
                     <p class="text-sm mt-2 text-gray-800 dark:text-gray-200">

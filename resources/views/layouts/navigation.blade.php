@@ -11,9 +11,16 @@
                 </div>
 
                 <!-- Navigation Links -->
+               @if(auth()->user()->type==1)
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
+                    </x-nav-link>
+                    
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('users.index')" :active="request()->routeIs('user.index')">
+                        {{ __('All Users') }}
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
@@ -27,15 +34,39 @@
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('users.index')" :active="request()->routeIs('user.index')">
-                        {{ __('All Users') }}
+                    <x-nav-link :href="route('bloodrequest.index')" :active="request()->routeIs('bloodrequest.index')">
+                        @if (auth()->user()->type==1)
+                        {{ __('Blood Request') }}
+                        @else
+                       
+                        @endif
+                    </x-nav-link>
+                </div>
+                @endif
+                @if (auth()->user()->type==0)
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('bloodrequest.user')" :active="request()->routeIs('bloodrequest.user')">
+                       
+                        {{ __('Blood Request you sent') }}
+                      
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('bloodrequest.index')" :active="request()->routeIs('bloodrequest.index')">
-                        {{ __('Blood Request') }}
+                    <x-nav-link :href="route('bloodrequest.requestRecieved')" :active="request()->routeIs('bloodrequest.requestRecieved')">
+                    
+                        {{ __('Blood Request you recieved') }}
+                      
                     </x-nav-link>
                 </div>
+                
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('bloodrequest.request')" :active="request()->routeIs('bloodrequest.request')">
+                       
+                        {{ __('Require Blood') }}
+                       
+                    </x-nav-link>
+                </div>
+                @endif
             </div>
 
             <!-- Settings Dropdown -->

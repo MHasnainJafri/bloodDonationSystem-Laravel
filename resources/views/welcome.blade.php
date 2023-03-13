@@ -423,11 +423,21 @@
         </div>
         <div class="rightSection">
           <!-- <a target="_blank" class="whatsapp desktop" href="#"><span>LOGIN</span></a> -->
+          @auth
           <a
+          class="languageSwitcher"
+          href="login/"
+          style="width: 70px; border-radius: 20px"
+          >Profile</a>
+          @endauth
+          @guest
+             <a
             class="languageSwitcher"
             href="login/"
             style="width: 70px; border-radius: 20px"
             >LOGIN</a>
+          @endguest
+         
           <a
             target="_blank"
             class="whatsapp desktop"

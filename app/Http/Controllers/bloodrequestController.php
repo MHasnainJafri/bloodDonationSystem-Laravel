@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Validator;
 use App\Models\bloodRequests;
+use App\Models\User;
+use Illuminate\Support\Facades\Redirect;
 
 class bloodrequestController extends Controller
 {
@@ -15,8 +17,14 @@ class bloodrequestController extends Controller
      */
     public function index()
     {
-        $bloodRequests = bloodRequests::paginate(10);
+        
+        if(\Auth::user()->type==1){
+            $bloodRequests = bloodRequests::paginate(10);
         return view('bloodrequest.bloodrequest', compact('bloodRequests'));
+        }
+        $bloodRequests = bloodRequests::where('donor_id',\Auth::user()->id)->paginate(10);
+        return view('bloodrequest.bloodrequest', compact('bloodRequests'));
+       
     }
     /**
      * Show the form for creating a new resource.
@@ -93,6 +101,35 @@ class bloodrequestController extends Controller
     public function destroy($id)
     {
         bloodRequests::find($id)->delete();
-        return redirect(route('bloodRequests.index'))->with('message', 'bloodRequests deleted with success');
+        return redirect()->back()->with('message', 'bloodRequests deleted with success');
+    }
+
+
+    public function bloodrequest(){}
+    public function sendRequest($id=1,$bloodtype){
+        \App\Models\bloodRequests::create([
+            'recipient_id'=>auth()->user()->id,
+            'BloodType'=> $bloodtype,
+            'donor_id'=>$id,
+            'location'=>User::find($id)->userinfo->Address
+
+        ]);
+        return Redirect()->route('bloodrequest.request')->with('success','Request Sent Successfully');
+    }
+    public function search(Request $request){
+
+        $address = $request->Address;
+        $bloodtype = $request->BloodType;
+        $bloodRequest=  User::whereHas('userinfo', function ($query) use ($address, $bloodtype) {
+            $query->where('address','like', '%'.$address.'%')
+            ->whereHas('blood', function ($query) use ($bloodtype) {
+                $query->where('id', $bloodtype);
+            });
+        })->get();
+        return view('bloodrequest.request',compact('bloodRequest'));
+
+    }
+    public function bloodrequestview(){
+        return view('bloodrequest.request');
     }
 }

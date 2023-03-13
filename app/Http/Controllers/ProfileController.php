@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\userinfo;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,6 +19,7 @@ class ProfileController extends Controller
     {
         return view('profile.edit', [
             'user' => $request->user(),
+            
         ]);
     }
 
@@ -32,6 +34,11 @@ class ProfileController extends Controller
             $request->user()->email_verified_at = null;
         }
 
+
+       userinfo::updateOrCreate(['user_id' => $request->user_id], $request->only('Address', 'BloodType', 'Country', 'phoneNumber', 'user_id'));
+
+
+        userinfo::create($request->only('Address','BloodType','Country','phoneNumber','user_id'));
         $request->user()->save();
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
